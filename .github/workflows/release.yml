@@ -1,48 +1,60 @@
-name: Publish Package
+name: Release
 
 on:
   push:
-    tags:
-      - 'v*'
+    branches:
+      - main
   workflow_dispatch:
-    inputs:
-      release-type:
-        description: "Select the type of release"
-        required: true
-        default: "patch"
-        type: choice
-        options:
-          - patch
-          - minor
-          - major
 
 permissions:
-  id-token: write    # Required for OIDC
-  contents: write    # Required for semantic-release to push tags/commits
-  issues: write      # Required for @semantic-release/github to create issues
+  id-token: write
+  contents: write
+  issues: write
 
 jobs:
-  publish:
+  release:
     runs-on: ubuntu-latest
+    environment: PUBLISH
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Ensure latest npm
+        run: npm install -g npm@latest
+
       - name: Install dependencies
         run: npm ci
+
       - name: Build
         run: npm run build
+
       - name: Test
         run: npm test
+
       - name: Semantic Release
+        id: semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx semantic-release
+        run: |
+          VERSION_BEFORE=$(node -p "require('./package.json').version")
+          npx semantic-release
+          VERSION_AFTER=$(node -p "require('./package.json').version")
+          if [ "$VERSION_BEFORE" != "$VERSION_AFTER" ]; then
+            echo "new_release=true" >> $GITHUB_OUTPUT
+            echo "Released $VERSION_AFTER"
+          else
+            echo "new_release=false" >> $GITHUB_OUTPUT
+            echo "No new release"
+          fi
+
       - name: Publish to npm
+        if: steps.semantic-release.outputs.new_release == 'true'
         run: npm publish --provenance --access public
-      - name: Upload Code Coverage
-        uses: codecov/codecov-action@v3.1.0

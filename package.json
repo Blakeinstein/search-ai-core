@@ -28,6 +28,10 @@
     "email": "rishi1998@gmail.com",
     "url": "https://github.com/blakeinstein"
   },
+  "publishConfig": {
+    "provenance": true,
+    "access": "public"
+  },
   "engines": {
     "node": ">=18.0"
   },
