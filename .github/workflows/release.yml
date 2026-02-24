@@ -17,8 +17,9 @@ on:
           - major
 
 permissions:
-  id-token: write  # Required for OIDC
-  contents: read
+  id-token: write    # Required for OIDC
+  contents: write    # Required for semantic-release to push tags/commits
+  issues: write      # Required for @semantic-release/github to create issues
 
 jobs:
   publish:
