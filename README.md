@@ -31,16 +31,16 @@ Best Large Language Models (LLMs) of 2025 - TechRadar
 npm install search-ai-core
 ```
 
-**Requires Node.js 18+** (uses global `fetch`).
+**Requires Node.js 18+.** No native dependencies — uses the built-in `https` module with browser-like TLS settings to query DuckDuckGo.
 
 ## Examples
 
-The [examples/](examples/) folder has runnable snippets (mirrors the [reference repo’s examples](https://github.com/jpjacobpadilla/SearchAI/tree/main/examples)). From the repo root:
+The [examples/](examples/) folder has runnable snippets (mirrors the [reference repo's examples](https://github.com/jpjacobpadilla/SearchAI/tree/main/examples)). Examples use top-level `await`, so run them with [Bun](https://bun.sh) from the repo root:
 
 ```bash
-npx ts-node examples/basic-search.ts
-npx ts-node examples/json-example.ts
-npx ts-node examples/markdown-example.ts
+bun examples/basic-search.ts
+bun examples/json-example.ts
+bun examples/markdown-example.ts
 ```
 
 See [examples/README.md](examples/README.md) for the full list.
@@ -110,7 +110,7 @@ Python - Wikipedia
 
 Once you have results, you can get them as Markdown or JSON for further processing.
 
-If `extend` is set to `true`, the content of each result’s page is fetched and included in the output. This port uses `fetch` to load and extract content (no Playwright). It also extracts metadata when possible (e.g. author, twitter handle).
+If `extend` is set to `true`, the content of each result's page is fetched and included in the output. Pages are fetched with Node's `https` module and automatically decompressed (gzip, deflate, brotli). Metadata is extracted when available (e.g. author, twitter handle).
 
 **Markdown:**
 
@@ -157,10 +157,10 @@ const results = await search({ query: 'query', proxy });
 
 ## Async support
 
-Use `asyncSearch` for the async API. It returns `SearchResults` (same as `search`); `markdown()` and `json()` are async on the results.
+Both `search` and `asyncSearch` are async and return the same `SearchResults` type. `asyncSearch` is provided as an alias for compatibility with the Python library's API.
 
 ```ts
-import { asyncSearch } from 'search-ai-core';
+import { asyncSearch, Filters } from 'search-ai-core';
 
 const results = await asyncSearch({
   query: 'Node.js',

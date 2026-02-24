@@ -6,4 +6,4 @@ on: [pull_request]
 
 jobs:
   build:
-    uses: blakeinstein/blakeinstein/.github/workflows/pr.yml@main
+    uses: ryansonshine/ryansonshine/.github/workflows/pr.yml@main
