@@ -1,7 +1,7 @@
 {
   "name": "search-ai-core",
   "version": "0.0.0-development",
-  "description": "A template for creating npm packages using TypeScript and VSCode",
+  "description": "Search the web with advanced filters and LLM-friendly output formats (TypeScript port of SearchAI)",
   "main": "./lib/index.js",
   "files": [
     "lib/**/*"
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ryansonshine/search-ai-core.git"
+    "url": "git+https://github.com/blakeinstein/search-ai-core.git"
   },
   "license": "MIT",
   "author": {
@@ -28,26 +28,26 @@
     "url": "https://github.com/blakeinstein"
   },
   "engines": {
-    "node": ">=12.0"
+    "node": ">=18.0"
   },
   "keywords": [
-    "boilerplate",
-    "template",
-    "typescript",
-    "vscode",
-    "jest",
-    "husky",
-    "commitizen",
-    "semantic-release",
-    "codecov"
+    "search",
+    "web",
+    "duckduckgo",
+    "filters",
+    "markdown",
+    "json",
+    "llm",
+    "typescript"
   ],
   "bugs": {
-    "url": "https://github.com/ryansonshine/search-ai-core/issues"
+    "url": "https://github.com/blakeinstein/search-ai-core/issues"
   },
-  "homepage": "https://github.com/ryansonshine/search-ai-core#readme",
+  "homepage": "https://github.com/blakeinstein/search-ai-core#readme",
   "devDependencies": {
     "@ryansonshine/commitizen": "^4.2.8",
     "@ryansonshine/cz-conventional-changelog": "^3.3.4",
+    "@types/html-to-text": "^9.0.4",
     "@types/jest": "^27.5.2",
     "@types/node": "^12.20.11",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
@@ -118,5 +118,9 @@
       "@semantic-release/npm",
       "@semantic-release/github"
     ]
+  },
+  "dependencies": {
+    "html-to-text": "^9.0.5",
+    "node-html-parser": "^7.0.2"
   }
 }
