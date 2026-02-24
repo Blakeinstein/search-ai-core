@@ -1,6 +1,6 @@
 {
   "name": "search-ai-core",
-  "version": "0.0.0-development",
+  "version": "0.0.1",
   "description": "Search the web with advanced filters and LLM-friendly output formats (TypeScript port of SearchAI)",
   "main": "./lib/index.js",
   "files": [
@@ -14,7 +14,8 @@
     "prepare": "husky install",
     "semantic-release": "semantic-release",
     "test:watch": "jest --watch",
-    "test": "jest --coverage",
+    "test": "jest",
+    "test:coverage": "node --max-old-space-size=4096 ./node_modules/.bin/jest --coverage",
     "typecheck": "tsc --noEmit"
   },
   "repository": {

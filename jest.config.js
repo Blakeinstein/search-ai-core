@@ -6,6 +6,7 @@ module.exports = {
     '<rootDir>/src/**/*.ts',
     '!<rootDir>/src/types/**/*.ts',
   ],
+  coveragePathIgnorePatterns: ['/node_modules/'],
   globals: {
     'ts-jest': {
       diagnostics: false,
