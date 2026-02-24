@@ -29,21 +29,18 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-          registry-url: 'https://registry.npmjs.org'
       - name: Install dependencies
         run: npm ci
       - name: Build
         run: npm run build
       - name: Test
         run: npm test
-      - name: Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Semantic Release
         run: npx semantic-release
+      - name: Publish to npm
+        run: npm publish --provenance --access public
       - name: Upload Code Coverage
         uses: codecov/codecov-action@v3.1.0
